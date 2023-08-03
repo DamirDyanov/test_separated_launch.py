@@ -3,15 +3,14 @@ import pytest
 
 
 @pytest.fixture()
-def run():
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch()
-        context = browser.new_context()
-        page = context.new_page()
-        return page
+def run(playwright):
+    webkit = playwright.webkit
+    browser = webkit.launch()
+    context = browser.new_context()
+    page = context.new_page()
 
 
-@pytest.fixture(name="run")
+@pytest.fixture()
 def test_separated_launch():
     page = run()
     page.goto('https://github.com/DamirDyanov?tab=repositories')
